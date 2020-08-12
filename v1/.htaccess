@@ -1,0 +1,33 @@
+Header Set Access-Control-Allow-Origin "*"
+Header Set Access-Control-Allow-Methods "*"
+
+php_flag display_errors on
+SetEnvIf Authorization .+ HTTP_AUTHORIZATION=$0
+
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME}% !-d
+RewriteCond %{REQUEST_FILENAME}% !-f
+
+
+RewriteRule ^blog/popular$ controller/Blog_controller.php?popular=$1[L]
+
+RewriteRule ^blog/allPage$ controller/Blog_controller.php?allPage=$1 [L]
+RewriteRule ^blog/search/([0-9,a-z,A-Z]+)$ controller/Blog_controller.php?search=$1 [L]
+
+RewriteRule ^blog/([0-9,a-z,A-Z]+)$ controller/Blog_controller.php?blogid=$1 [L]
+
+RewriteRule ^blog/page/([0-9]+)$ controller/Blog_controller.php?page=$1 [L]
+
+RewriteRule ^blog/type/([a-z,A-Z]+)$ controller/Blog_controller.php?type=$1 [L]
+RewriteRule ^blog controller/Blog_controller.php [L]
+
+RewriteRule ^signup$ controller/User_controller.php [L]
+
+RewriteRule ^login$ controller/Session_controller.php [L]
+RewriteRule ^login/([0-9,a-z,A-Z]+)$ controller/Session_controller.php?sessionid=$1 [L]
+
+
+#IMAGES
+RewriteRule ^blog/([0-9]+)/image/([0-9]+)/attributes$ controller/image_controller.php?blogid=$1&imageid=$2&attributes=true [L]
+RewriteRule ^blog/([0-9]+)/image/([0-9]+)$            controller/image_controller.php?blogid=$1&imageid=$2 [L]
+RewriteRule ^blog/([0-9]+)/image$                     controller/image_controller.php?blogid=$1&imageid=$2 [L]
